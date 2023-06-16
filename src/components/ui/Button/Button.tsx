@@ -1,37 +1,62 @@
 'use client';
 
+import { cva, type VariantProps } from 'class-variance-authority';
+import { ButtonIcon } from '@ui/Button/ButtonIcon';
 import type { IconType } from 'react-icons';
 
-interface ButtonProps {
+/**
+ * BUTTON PROPS
+ */
+interface ButtonProps extends VariantProps<typeof buttonStyles> {
   label: string;
   onClick(e: React.MouseEvent<HTMLButtonElement>): void;
   disabled?: boolean;
-  outline?: boolean;
-  small?: boolean;
+  intent?: 'primary' | 'secondary';
+  size?: 'small' | 'large';
   icon?: IconType;
 }
 
+/**
+ * BUTTON STYLES
+ */
+const buttonStyles = cva(
+  'relative disabled:opacity-70 disabled:cursor-not-allowed rounded-lg hover:opacity-80 transition w-full',
+  {
+    variants: {
+      intent: {
+        primary: 'bg-rose-500 border-rose-500 text-white',
+        secondary: 'bg-white border-black text-black',
+      },
+      size: {
+        small: 'py-1 text-sm font-light border-[1px]',
+        large: 'py-3 text-md font-semibold border-2',
+      },
+    },
+    defaultVariants: {
+      intent: 'primary',
+      size: 'large',
+    },
+  }
+);
+
+/**
+ * BUTTON COMPONENT
+ */
 export const Button: React.FC<ButtonProps> = ({
   label,
   onClick,
   disabled,
-  outline,
-  small,
-  icon: Icon,
+  intent,
+  size,
+  icon,
 }) => {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`relative disabled:opacity-70 disabled:cursor-not-allowed rounded-lg hover:opactiy-80 transition w-full ${
-        outline ? 'bg-white' : 'bg-rose-500'
-      } ${outline ? 'border-black' : 'border-rose-500'} ${
-        outline ? 'text-black' : 'text-white'
-      } ${small ? 'py-1' : 'py-3'} ${small ? 'text-sm' : 'text-md'} ${
-        small ? 'font-light' : 'font-semibold'
-      } ${small ? 'border-[1px]' : 'border-2'}`}
+      className={buttonStyles({ intent, size })}
     >
-      {Icon && <Icon className='absolute left-4 top-3' />}
+      {icon && <ButtonIcon icon={icon} />}
       {label}
     </button>
   );
