@@ -1,6 +1,7 @@
 'use client';
 
 import { AiOutlineMenu } from 'react-icons/ai';
+import { Avatar } from '@components/Avatar';
 
 export const UserMenu = () => {
   return (
@@ -17,6 +18,9 @@ export const UserMenu = () => {
           className='p-4 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer transition md:py-1 md:px-2 hover:shadow-md'
         >
           <AiOutlineMenu />
+          <div className='hidden md:block'>
+            <Avatar />
+          </div>
         </div>
       </div>
     </div>
