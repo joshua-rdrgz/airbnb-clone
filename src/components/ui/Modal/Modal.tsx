@@ -2,7 +2,7 @@
 
 import { useEffect, useCallback, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
-import { Button } from '@components/Button';
+import { Button } from '@ui/Button';
 
 interface ModalProps {
   isOpen?: boolean;

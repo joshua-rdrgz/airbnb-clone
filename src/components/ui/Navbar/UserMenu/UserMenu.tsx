@@ -2,8 +2,8 @@
 
 import { useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
-import { Avatar } from '@components/Avatar';
-import { MenuItem } from '@components/Navbar/MenuItem';
+import { Avatar } from '@ui/Avatar';
+import { MenuItem } from '@ui/Navbar/MenuItem';
 
 export const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
