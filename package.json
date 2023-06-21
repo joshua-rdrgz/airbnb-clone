@@ -9,9 +9,9 @@
     "lint": "next lint",
     "storybook": "concurrently \"npm run watch:storybook\" \"npm run watch:tailwind\"",
     "watch:storybook": "storybook dev -p 6006",
-    "watch:tailwind": "npx tailwind -i ./src/app/globals.css -o ./src/styles/tailwind-output.css --watch",
+    "watch:tailwind": "npx tailwind -i ./src/app/globals.css -o ./generatedTailwind/tailwind-output.css --watch",
     "build-storybook": "npm build:tailwind && storybook build",
-    "build:tailwind": "npx tailwind -i ./src/app/globals.css -o ./src/styles/tailwind-output.css"
+    "build:tailwind": "npx tailwind -i ./src/app/globals.css -o ./generatedTailwind/tailwind-output.css"
   },
   "dependencies": {
     "@types/node": "20.3.1",
