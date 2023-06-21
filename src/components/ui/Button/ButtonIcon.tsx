@@ -7,5 +7,5 @@ interface ButtonIconProps {
 }
 
 export const ButtonIcon: React.FC<ButtonIconProps> = ({ icon: Icon }) => {
-  return <Icon className='absolute left-4 top-3' />;
+  return <Icon size={24} className='absolute left-4 top-3' />;
 };
