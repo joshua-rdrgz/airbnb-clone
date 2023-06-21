@@ -1,18 +1,35 @@
 'use client';
 
 import { cva, type VariantProps } from 'class-variance-authority';
-import { ButtonIcon } from '@ui/Button/ButtonIcon';
+import { ButtonIcon } from './ButtonIcon';
 import type { IconType } from 'react-icons';
 
 /**
  * BUTTON PROPS
  */
 interface ButtonProps extends VariantProps<typeof buttonStyles> {
+  /** The content of the button. */
   label: string;
+
+  /** Function to be assigned to the HTML button's "onClick" attribute. */
   onClick(e: React.MouseEvent<HTMLButtonElement>): void;
+
+  /** Whether or not the HTML button is disabled to the user.
+   * @default false
+   */
   disabled?: boolean;
+
+  /** Defines styling for Primary CTAs and Secondary CTAs
+   * @default primary
+   */
   intent?: 'primary' | 'secondary';
+
+  /** Defines the size of the button on the page.
+   * @default large
+   */
   size?: 'small' | 'large';
+
+  /** Define a React-Icon here to replace text with a React-Icon. */
   icon?: IconType;
 }
 
@@ -40,7 +57,7 @@ const buttonStyles = cva(
 );
 
 /**
- * BUTTON COMPONENT
+ * Button UI Component
  */
 export const Button: React.FC<ButtonProps> = ({
   label,
