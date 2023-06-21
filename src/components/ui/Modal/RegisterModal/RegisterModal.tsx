@@ -50,31 +50,23 @@ export const RegisterModal = () => {
         <Heading.Title>Welcome to Airbnb</Heading.Title>
         <Heading.Subtitle>Create an account!</Heading.Subtitle>
       </Heading>
-      <Input
-        id='email'
-        label='Email'
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-      <Input
-        id='name'
-        label='Name'
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-      <Input
-        id='password'
-        label='Password'
-        type='password'
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
+      <Input id='email' errors={errors}>
+        <Input.InputTag disabled={isLoading} register={register} required />
+        <Input.Label>Email</Input.Label>
+      </Input>
+      <Input id='name' errors={errors}>
+        <Input.InputTag disabled={isLoading} register={register} required />
+        <Input.Label>Name</Input.Label>
+      </Input>
+      <Input id='password' errors={errors}>
+        <Input.InputTag
+          type='password'
+          disabled={isLoading}
+          register={register}
+          required
+        />
+        <Input.Label>Password</Input.Label>
+      </Input>
     </div>
   );
 
