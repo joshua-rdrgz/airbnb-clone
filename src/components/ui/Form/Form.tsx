@@ -34,13 +34,7 @@ export const Form = ({ children, onSubmit }: FormProps) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FieldValues>({
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-    },
-  });
+  } = useForm<FieldValues>();
 
   const onSubmitWrapper = (
     data: FieldValues,
