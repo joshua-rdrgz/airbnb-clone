@@ -31,6 +31,9 @@ interface ButtonProps extends VariantProps<typeof buttonStyles> {
 
   /** Define a React-Icon here to replace text with a React-Icon. */
   icon?: IconType;
+
+  /** Defines if the button is meant to be an input of type submit. */
+  typeSubmit?: boolean;
 }
 
 /**
@@ -66,7 +69,18 @@ export const Button: React.FC<ButtonProps> = ({
   intent,
   size,
   icon,
+  typeSubmit,
 }) => {
+  if (typeSubmit) {
+    return (
+      <input
+        type='submit'
+        value={label}
+        className={buttonStyles({ intent, size })}
+      />
+    );
+  }
+
   return (
     <button
       onClick={onClick}
