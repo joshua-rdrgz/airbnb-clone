@@ -1,11 +1,24 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useCurrentUserStore } from '@hooks/useCurrentUserStore';
 import { Container } from '@ui/Container';
 import { Logo } from '@ui/Navbar/Logo';
 import { Search } from '@ui/Navbar/Search';
 import { UserMenu } from '@ui/Navbar/UserMenu';
+import { SafeUser } from '@/types';
 
-export const Navbar = () => {
+interface NavbarProps {
+  currentUser?: SafeUser | null;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
+  const { setCurrentUser } = useCurrentUserStore();
+
+  useEffect(() => {
+    setCurrentUser(currentUser as User);
+  }, [currentUser, setCurrentUser]);
+
   return (
     <div className='fixed w-full bg-white z-10 shadow-sm'>
       <div className='py-4 border-b-[1px]'>
