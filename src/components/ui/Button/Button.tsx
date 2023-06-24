@@ -12,7 +12,7 @@ interface ButtonProps extends VariantProps<typeof buttonStyles> {
   label: string;
 
   /** Function to be assigned to the HTML button's "onClick" attribute. */
-  onClick(e: React.MouseEvent<HTMLButtonElement>): void;
+  onClick?(e: React.MouseEvent<HTMLButtonElement>): void;
 
   /** Whether or not the HTML button is disabled to the user.
    * @default false
