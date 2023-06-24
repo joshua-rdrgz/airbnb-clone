@@ -3,12 +3,13 @@
 import { useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { Avatar } from '@ui/Avatar';
-import { MenuItem } from '@ui/Navbar/MenuItem';
+import { useCurrentUserStore } from '@hooks/useCurrentUserStore';
 import { GuestModal } from '@ui/Modal/GuestModal/GuestModal';
 import { LoggedInNav } from '@ui/Navbar/LoggedInNav';
 
 export const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { currentUser } = useCurrentUserStore();
 
   const toggleOpen = useCallback(() => {
     setIsOpen((boolean) => !boolean);
