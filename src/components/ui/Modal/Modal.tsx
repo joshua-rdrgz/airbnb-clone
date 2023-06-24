@@ -1,109 +1,144 @@
 'use client';
 
-import { useEffect, useCallback, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  cloneElement,
+  useEffect,
+} from 'react';
+import { createPortal } from 'react-dom';
 import { IoMdClose } from 'react-icons/io';
-import { Button } from '@ui/Button';
 
-interface ModalProps {
-  isOpen?: boolean;
-  onClose(): void;
-  onSubmit(): void;
-  title?: string;
-  body?: React.ReactElement;
-  footer?: React.ReactElement;
-  actionLabel: string;
-  disabled?: boolean;
-  secondaryAction?(): void;
-  secondaryActionLabel?: string;
+interface ModalContextProps {
+  openedModal: string | null;
+  triggerModalAnimation: 'open' | 'close';
+  openModal(modal: string): void;
+  closeModal(): void;
 }
 
-export const Modal: React.FC<ModalProps> = ({
-  isOpen,
-  onClose,
-  onSubmit,
-  title,
-  body,
-  footer,
-  actionLabel,
-  disabled,
-  secondaryAction,
-  secondaryActionLabel,
-}) => {
-  const [showModal, setShowModal] = useState(isOpen);
+const ModalContext = createContext<ModalContextProps | null>(null);
 
+interface ModalProps {
+  children: React.ReactNode;
+}
+
+export const Modal = ({ children }: ModalProps) => {
+  /** Handles actual closing and opening of modal */
+  const [openedModal, setOpenedModal] =
+    useState<ModalContextProps['openedModal']>(null);
+
+  /** Handles animations for opening and closing modal */
+  const [triggerModalAnimation, setTriggerModalAnimation] = useState<
+    'open' | 'close'
+  >('open');
+
+  /** Everytime the modal opens or closes, trigger the animation */
   useEffect(() => {
-    setShowModal(isOpen);
-  }, [isOpen]);
+    const openOrClose = openedModal === null ? 'close' : 'open';
+    setTriggerModalAnimation(openOrClose);
+  }, [openedModal]);
 
-  const handleClose = useCallback(() => {
-    if (disabled) return;
+  const ANIMATION_DELAY = 300;
+  const openModal = useCallback((modalToOpen: string) => {
+    setOpenedModal(modalToOpen);
 
-    setShowModal(false);
     setTimeout(() => {
-      onClose();
-    }, 300);
-  }, [disabled, onClose]);
+      setTriggerModalAnimation('open');
+    }, ANIMATION_DELAY);
+  }, []);
 
-  const handleSubmit = useCallback(() => {
-    if (disabled) return;
+  const closeModal = useCallback(() => {
+    setTriggerModalAnimation('close');
 
-    onSubmit();
-  }, [disabled, onSubmit]);
-
-  const handleSecondaryAction = useCallback(() => {
-    if (disabled || !secondaryAction) return;
-
-    secondaryAction();
-  }, [disabled, secondaryAction]);
-
-  if (!isOpen) return null;
+    setTimeout(() => {
+      /** Close the modal */
+      setOpenedModal(null);
+    }, ANIMATION_DELAY);
+  }, []);
 
   return (
+    <ModalContext.Provider
+      value={{ openedModal, triggerModalAnimation, openModal, closeModal }}
+    >
+      {children}
+    </ModalContext.Provider>
+  );
+};
+
+interface OpenProps {
+  children: React.ReactElement;
+  opens: string;
+}
+
+const Open: React.FC<OpenProps> = ({ children, opens: modalToOpen }) => {
+  const { openModal } = useContext(ModalContext) as ModalContextProps;
+
+  return cloneElement(children, { onClick: () => openModal(modalToOpen) });
+};
+
+interface WindowProps {
+  children: React.ReactElement | React.ReactElement[];
+  name: string;
+}
+
+const Window = ({ children, name }: WindowProps) => {
+  const { openedModal, triggerModalAnimation, closeModal } = useContext(
+    ModalContext
+  ) as ModalContextProps;
+
+  if (openedModal !== name) return null;
+
+  const JSXReturned = (
     <>
+      {/* OVERLAY */}
       <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70'>
+        {/* BACKGROUND CANVAS */}
         <div className='relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto'>
-          {/* CONTENT */}
+          {/* ANIMATION CONTROL */}
           <div
             className={`translate duration-300 h-full ${
-              showModal ? 'translate-y-0' : 'translate-y-full'
-            } ${showModal ? 'opacity-100' : 'opacity-0'}`}
+              triggerModalAnimation === 'open'
+                ? 'translate-y-0'
+                : 'translate-y-full'
+            } ${
+              triggerModalAnimation === 'open' ? 'opacity-100' : 'opacity-0'
+            }`}
           >
+            {/* BACKGROUND */}
             <div className='translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none'>
-              {/* HEADER */}
-              <div className='flex items-center p-6 rounded-t justify-center relative border-b-[1px]'>
-                <button
-                  onClick={handleClose}
-                  className='p-1 border-0 hover:opacity-70 transition absolute left-9'
-                >
-                  <IoMdClose size={18} />
-                </button>
-                <div className='text-lg font-semibold'>{title}</div>
-              </div>
-              {/* BODY */}
-              <div className='relative p-6 flex-auto'>{body}</div>
-              {/* FOOTER */}
-              <div className='flex flex-col gap-2 p-6'>
-                <div className='flex flex-row items-center gap-4 w-full'>
-                  {secondaryAction && secondaryActionLabel && (
-                    <Button
-                      disabled={disabled}
-                      label={secondaryActionLabel}
-                      onClick={handleSecondaryAction}
-                      intent='secondary'
-                    />
-                  )}
-                  <Button
-                    disabled={disabled}
-                    label={actionLabel}
-                    onClick={handleSubmit}
-                  />
-                </div>
-                {footer}
-              </div>
+              {React.Children.map(children, (child) =>
+                cloneElement(child, { closeModal })
+              )}
             </div>
           </div>
         </div>
       </div>
     </>
   );
+  return createPortal(JSXReturned, document.body);
 };
+
+interface HeadingProps {
+  children: React.ReactNode;
+}
+
+const Heading: React.FC<HeadingProps> = ({ children }) => {
+  const { closeModal } = useContext(ModalContext) as ModalContextProps;
+  return (
+    <div className='flex items-center p-6 rounded-t justify-center relative border-b-[1px]'>
+      <button
+        onClick={closeModal}
+        className='p-1 border-0 hover:opacity-70 transition absolute left-9'
+      >
+        <IoMdClose size={18} />
+      </button>
+      <div className='text-lg font-semibold'>{children}</div>
+    </div>
+  );
+};
+
+Modal.Open = Open;
+Modal.Window = Window;
+Modal.Heading = Heading;
