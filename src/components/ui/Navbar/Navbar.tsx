@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useCurrentUserStore } from '@hooks/useCurrentUserStore';
+import { SafeUser } from '@/types';
 import { Container } from '@ui/Container';
 import { Logo } from '@ui/Navbar/Logo';
 import { Search } from '@ui/Navbar/Search';
@@ -16,7 +17,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   const { setCurrentUser } = useCurrentUserStore();
 
   useEffect(() => {
-    setCurrentUser(currentUser as User);
+    setCurrentUser(currentUser as SafeUser);
   }, [currentUser, setCurrentUser]);
 
   return (

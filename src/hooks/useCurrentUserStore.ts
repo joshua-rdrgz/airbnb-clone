@@ -1,9 +1,9 @@
-import { User } from '@prisma/client';
+import { SafeUser } from '@/types';
 import { create } from 'zustand';
 
 interface CurrentUserState {
-  currentUser: User | null;
-  setCurrentUser(user: User | null): void;
+  currentUser: SafeUser | null;
+  setCurrentUser(user: SafeUser | null): void;
 }
 
 export const useCurrentUserStore = create<CurrentUserState>()((set) => ({
