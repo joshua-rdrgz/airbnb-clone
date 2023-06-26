@@ -16,6 +16,7 @@ interface ModalContextProps {
   triggerModalAnimation: 'open' | 'close';
   openModal(modal: string): void;
   closeModal(): void;
+  toggleModal(modal: string): void;
 }
 
 const ModalContext = createContext<ModalContextProps | null>(null);
@@ -58,9 +59,30 @@ export const Modal = ({ children }: ModalProps) => {
     }, ANIMATION_DELAY);
   }, []);
 
+  const toggleModal = useCallback(
+    async (modalToOpen: string) => {
+      /** Forces closeModal() to complete before openModal(modalToOpen) begins */
+      const promisifiedCloseModal = new Promise<void>((resolve) => {
+        closeModal();
+        setTimeout(resolve, ANIMATION_DELAY);
+      });
+
+      await promisifiedCloseModal;
+
+      openModal(modalToOpen);
+    },
+    [closeModal, openModal]
+  );
+
   return (
     <ModalContext.Provider
-      value={{ openedModal, triggerModalAnimation, openModal, closeModal }}
+      value={{
+        openedModal,
+        triggerModalAnimation,
+        openModal,
+        closeModal,
+        toggleModal,
+      }}
     >
       {children}
     </ModalContext.Provider>
@@ -84,9 +106,8 @@ interface WindowProps {
 }
 
 const Window = ({ children, name }: WindowProps) => {
-  const { openedModal, triggerModalAnimation, closeModal } = useContext(
-    ModalContext
-  ) as ModalContextProps;
+  const { openedModal, triggerModalAnimation, closeModal, toggleModal } =
+    useContext(ModalContext) as ModalContextProps;
 
   if (openedModal !== name) return null;
 
@@ -109,7 +130,7 @@ const Window = ({ children, name }: WindowProps) => {
             {/* BACKGROUND */}
             <div className='translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none'>
               {React.Children.map(children, (child) =>
-                cloneElement(child, { closeModal })
+                cloneElement(child, { closeModal, toggleModal })
               )}
             </div>
           </div>
