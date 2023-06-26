@@ -4,11 +4,15 @@ import { FcGoogle } from 'react-icons/fc';
 import { Button } from '@ui/Button';
 
 interface SocialSignUpOrInProps {
-  closeModal?(): Promise<void>;
+  toggleModal?(): void;
+  footerLabel: string;
+  footerButtonContent: string;
 }
 
 export const SocialSignUpOrIn: React.FC<SocialSignUpOrInProps> = ({
-  closeModal,
+  toggleModal,
+  footerLabel,
+  footerButtonContent,
 }) => {
   return (
     <div className='flex flex-col gap-4 mt-3 p-6'>
@@ -27,12 +31,12 @@ export const SocialSignUpOrIn: React.FC<SocialSignUpOrInProps> = ({
       />
       <div className='justify-center text-neutral-500 mt-4 font-light'>
         <div className='flex flex-row justify-center items-center gap-2'>
-          <div>Already have an account?</div>
+          <div>{footerLabel}</div>
           <div
             className='text-neutral-800 cursor-pointer hover:underline'
-            onClick={closeModal}
+            onClick={toggleModal}
           >
-            Log in
+            {footerButtonContent}
           </div>
         </div>
       </div>
