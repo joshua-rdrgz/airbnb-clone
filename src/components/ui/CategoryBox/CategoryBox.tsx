@@ -6,7 +6,6 @@ import queryString from 'query-string';
 import { IconType } from 'react-icons';
 
 interface CategoryBoxProps {
-  key: string;
   label: string;
   description?: string;
   icon: IconType;
@@ -14,7 +13,6 @@ interface CategoryBoxProps {
 }
 
 export const CategoryBox: React.FC<CategoryBoxProps> = ({
-  key,
   label,
   description,
   icon: Icon,
