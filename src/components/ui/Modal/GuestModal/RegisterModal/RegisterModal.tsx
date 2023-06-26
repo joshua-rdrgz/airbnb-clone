@@ -10,9 +10,13 @@ import { SocialSignUpOrIn } from '@ui/Modal/GuestModal/SocialSignUpOrIn';
 interface RegisterModalProps {
   /** closeModal is received from Modal.Window */
   closeModal?(): Promise<void>;
+  toggleModal?(modalToOpen: string): void;
 }
 
-export const RegisterModal: React.FC<RegisterModalProps> = ({ closeModal }) => {
+export const RegisterModal: React.FC<RegisterModalProps> = ({
+  closeModal,
+  toggleModal,
+}) => {
   const onFormSubmit = async (data: FieldValues) => {
     try {
       axios.post('/api/register', data);
@@ -46,7 +50,11 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({ closeModal }) => {
           </Form>
         </div>
       </div>
-      <SocialSignUpOrIn closeModal={closeModal} />
+      <SocialSignUpOrIn
+        toggleModal={() => toggleModal?.('login_modal')}
+        footerLabel='Already have an account?'
+        footerButtonContent='Log in'
+      />
     </>
   );
 };

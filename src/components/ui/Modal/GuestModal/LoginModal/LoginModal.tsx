@@ -4,19 +4,19 @@ import { useRouter } from 'next/navigation';
 import { signIn, SignInResponse } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
 import { FieldValues } from 'react-hook-form';
-import { AiFillGithub } from 'react-icons/ai';
-import { FcGoogle } from 'react-icons/fc';
 import { Heading } from '@ui/Heading';
 import { Form } from '@ui/Form';
-import { Button } from '@ui/Button';
 import { SocialSignUpOrIn } from '../SocialSignUpOrIn';
 
 interface LoginModalProps {
-  /** closeModal is received from Modal.Window */
   closeModal?(): Promise<void>;
+  toggleModal?(modalToOpen: string): void;
 }
 
-export const LoginModal: React.FC<LoginModalProps> = ({ closeModal }) => {
+export const LoginModal: React.FC<LoginModalProps> = ({
+  closeModal,
+  toggleModal,
+}) => {
   const router = useRouter();
 
   const onFormSubmit = async (data: FieldValues) => {
@@ -62,7 +62,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({ closeModal }) => {
           </Form>
         </div>
       </div>
-      <SocialSignUpOrIn closeModal={closeModal} />
+      <SocialSignUpOrIn
+        toggleModal={() => toggleModal?.('sign_up_modal')}
+        footerLabel='First time using Airbnb?'
+        footerButtonContent='Create an account'
+      />
     </>
   );
 };
