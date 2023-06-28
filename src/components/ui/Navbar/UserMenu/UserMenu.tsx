@@ -6,6 +6,7 @@ import { Avatar } from '@ui/Avatar';
 import { useCurrentUserStore } from '@hooks/useCurrentUserStore';
 import { GuestModal } from '@ui/Modal/GuestModal/GuestModal';
 import { LoggedInNav } from '@ui/Navbar/LoggedInNav';
+import { AirbnbYourHome } from './AirbnbYourHome';
 
 export const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,12 +19,16 @@ export const UserMenu = () => {
   return (
     <div className='relative'>
       <div className='flex flex-row items-center gap-3'>
-        <div
-          onClick={() => {}}
-          className='hidden text-sm font-semibold py-3 px-4 rounded-full transition cursor-pointer md:block hover:bg-neutral-100'
-        >
-          Airbnb your home
-        </div>
+        {currentUser ? (
+          <div
+            onClick={() => {}}
+            className='hidden text-sm font-semibold py-3 px-4 rounded-full transition cursor-pointer md:block hover:bg-neutral-100'
+          >
+            Airbnb your home
+          </div>
+        ) : (
+          <AirbnbYourHome />
+        )}
         <div
           onClick={toggleOpen}
           className='p-4 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer transition md:py-1 md:px-2 hover:shadow-md'
