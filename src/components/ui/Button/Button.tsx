@@ -7,7 +7,7 @@ import type { IconType } from 'react-icons';
 /**
  * BUTTON PROPS
  */
-interface ButtonProps extends VariantProps<typeof buttonStyles> {
+export interface ButtonProps extends VariantProps<typeof buttonStyles> {
   /** The content of the button. */
   label: string;
 
