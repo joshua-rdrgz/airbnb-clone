@@ -1,4 +1,4 @@
 export * from './Input';
 export * from './Footer';
-export * from './SecondaryAction';
+export * from './Action';
 export * from './Submit';
