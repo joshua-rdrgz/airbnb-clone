@@ -1,44 +1,73 @@
-'use client';
+import React, { createContext, useMemo, useState } from 'react';
+import { useForm, FormProvider, type FieldValues } from 'react-hook-form';
+import { Action, Footer, Input, Label, Submit, Step } from './children';
 
-import { createContext, useState } from 'react';
-import {
-  FieldValues,
-  UseFormRegister,
-  useForm,
-  type FieldErrors,
-} from 'react-hook-form';
-import { Input, Footer, SecondaryAction, Submit } from './children';
-
-/**
- * CREATE FORMCONTEXT
- */
 export interface FormContextProps {
   isLoading: boolean;
-  errors: FieldErrors;
-  register: UseFormRegister<FieldValues>;
+  watching: any[] | undefined;
+
+  /** For Multi-Step Forms */
+  multiStepForm: {
+    step: number;
+    onBack(): void;
+    onNext(): void;
+    backButtonContent: 'Back' | undefined;
+    nextButtonContent: 'Create' | 'Next';
+  };
 }
 
 export const FormContext = createContext<FormContextProps | null>(null);
 
-/**
- * FORM COMPONENT
- */
-interface FormProps {
+interface FormProps<DefaultValues> {
   children: React.ReactNode;
   onSubmit(data: FieldValues): Promise<void>;
+  defaultValues: DefaultValues;
+  watch?: string[];
+  numberOfSteps?: number;
 }
 
-export const Form = ({ children, onSubmit }: FormProps) => {
+export const Form = <DV extends object>({
+  children,
+  onSubmit,
+  defaultValues,
+  watch,
+  numberOfSteps,
+}: FormProps<DV>) => {
+  /** General Form State */
   const [isLoading, setIsLoading] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FieldValues>();
+  const methods = useForm({ defaultValues } as DV);
 
+  /** Multi-Step Form State */
+  const [step, setStep] = useState(1);
+  console.log('step from Form: ', step);
+
+  /** Set up watching if provided */
+  const watching = watch && methods.watch(watch);
+  console.log('watching from Form: ', watching);
+
+  /** Multi-Step Form Functionality */
+  const onBack = () => {
+    setStep((step) => step - 1);
+  };
+
+  const onNext = () => {
+    setStep((step) => step + 1);
+  };
+
+  const backButtonContent = useMemo(() => {
+    if (step === 1) return undefined;
+    return 'Back';
+  }, [step]);
+
+  const nextButtonContent = useMemo(() => {
+    if (step === numberOfSteps) return 'Create';
+    return 'Next';
+  }, [step, numberOfSteps]);
+
+  /** Form Submit Functions */
   const onSubmitWrapper = (
     data: FieldValues,
-    onFormSubmit: FormProps['onSubmit']
+    onFormSubmit: FormProps<DV>['onSubmit']
   ) => {
     setIsLoading(true);
 
@@ -48,19 +77,48 @@ export const Form = ({ children, onSubmit }: FormProps) => {
   };
 
   return (
-    <FormContext.Provider value={{ isLoading, errors, register }}>
-      <form
-        onSubmit={handleSubmit((data) => onSubmitWrapper(data, onSubmit))}
-        className='flex flex-col gap-4'
-      >
-        {children}
-      </form>
+    <FormContext.Provider
+      value={{
+        isLoading,
+        watching,
+        multiStepForm: {
+          step,
+          onBack,
+          onNext,
+          backButtonContent,
+          nextButtonContent,
+        },
+      }}
+    >
+      <FormProvider {...methods}>
+        <form
+          onSubmit={
+            /** Check if Multi-Step Form */
+            numberOfSteps
+              ? /** Check if on the last step of the form */
+                step === numberOfSteps
+                ? /** Submit the Form */
+                  methods.handleSubmit((data) =>
+                    onSubmitWrapper(data, onSubmit)
+                  )
+                : /** If not on the last step of the form, don't let anything happen */
+                  (e) => e.preventDefault()
+              : /** If not a Multi-Step Form */
+                methods.handleSubmit((data) => onSubmitWrapper(data, onSubmit))
+          }
+          className='flex flex-col gap-4'
+        >
+          {children}
+        </form>
+      </FormProvider>
     </FormContext.Provider>
   );
 };
 
-/** ASSIGN CHILDREN COMPONENTS TO PARENT */
+/** Append Child Elements */
 Form.Input = Input;
+Form.Label = Label;
 Form.Footer = Footer;
-Form.SecondaryAction = SecondaryAction;
+Form.Action = Action;
 Form.Submit = Submit;
+Form.Step = Step;
