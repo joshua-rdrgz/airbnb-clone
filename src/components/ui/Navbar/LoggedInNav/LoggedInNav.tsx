@@ -1,4 +1,6 @@
 import { MenuItem } from '@ui/Navbar/MenuItem';
+import { Modal } from '@ui/Modal';
+import { RentModal } from '@ui/Modal/RentModal';
 import { Logout } from './Logout';
 
 export const LoggedInNav = () => {
@@ -8,7 +10,15 @@ export const LoggedInNav = () => {
       <MenuItem onClick={() => {}}>My favorites</MenuItem>
       <MenuItem onClick={() => {}}>My reservations</MenuItem>
       <MenuItem onClick={() => {}}>My properties</MenuItem>
-      <MenuItem onClick={() => {}}>Airbnb my home</MenuItem>
+      <Modal>
+        <Modal.Open opens='rent_modal'>
+          <MenuItem>Airbnb your home</MenuItem>
+        </Modal.Open>
+        <Modal.Window name='rent_modal'>
+          <Modal.Heading>Airbnb your home!</Modal.Heading>
+          <RentModal />
+        </Modal.Window>
+      </Modal>
       <Logout />
     </>
   );
