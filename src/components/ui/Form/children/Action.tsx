@@ -1,15 +1,17 @@
 import { useContext } from 'react';
 import { FormContext, type FormContextProps } from '../Form';
-import { Button } from '@ui/Button';
+import { Button, type ButtonProps } from '@ui/Button';
 
-interface SecondaryActionProps {
+interface ActionProps {
   children: string;
   onClick(): void;
+  intent?: ButtonProps['intent'];
 }
 
-export const SecondaryAction: React.FC<SecondaryActionProps> = ({
+export const Action: React.FC<ActionProps> = ({
   children,
   onClick,
+  intent = 'primary',
 }) => {
   const { isLoading } = useContext(FormContext) as FormContextProps;
 
@@ -17,7 +19,7 @@ export const SecondaryAction: React.FC<SecondaryActionProps> = ({
     <Button
       label={children}
       onClick={onClick}
-      intent='secondary'
+      intent={intent}
       disabled={isLoading}
     />
   );
