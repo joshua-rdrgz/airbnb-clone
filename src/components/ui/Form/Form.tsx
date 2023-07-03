@@ -1,6 +1,14 @@
 import React, { createContext, useMemo, useState } from 'react';
 import { useForm, FormProvider, type FieldValues } from 'react-hook-form';
-import { Action, Footer, Input, Label, Submit, Step } from './children';
+import {
+  Action,
+  Footer,
+  Input,
+  Label,
+  Submit,
+  Step,
+  ControlledInput,
+} from './children';
 
 export interface FormContextProps {
   isLoading: boolean;
@@ -122,3 +130,4 @@ Form.Footer = Footer;
 Form.Action = Action;
 Form.Submit = Submit;
 Form.Step = Step;
+Form.ControlledInput = ControlledInput;
