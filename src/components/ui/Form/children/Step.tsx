@@ -12,7 +12,7 @@ export const Step = ({ children, step: currentStep }: StepProps) => {
   return (
     <>
       {multiStepForm.step === currentStep && children}
-      <StepFooter />
+      {multiStepForm.step === currentStep && <StepFooter />}
     </>
   );
 };
@@ -23,7 +23,7 @@ const StepFooter = () => {
   return (
     <Form.Footer>
       {multiStepForm.backButtonContent && (
-        <Form.Action onClick={multiStepForm.onBack}>
+        <Form.Action onClick={multiStepForm.onBack} intent='secondary'>
           {multiStepForm.backButtonContent}
         </Form.Action>
       )}
