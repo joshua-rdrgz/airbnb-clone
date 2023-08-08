@@ -8,6 +8,7 @@ import {
   Submit,
   Step,
   ControlledInput,
+  Feature,
 } from './children';
 
 export interface FormContextProps {
@@ -131,3 +132,4 @@ Form.Action = Action;
 Form.Submit = Submit;
 Form.Step = Step;
 Form.ControlledInput = ControlledInput;
+Form.Feature = Feature;

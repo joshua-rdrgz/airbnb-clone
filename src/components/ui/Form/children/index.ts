@@ -5,3 +5,4 @@ export * from './Action';
 export * from './Submit';
 export * from './Step';
 export * from './ControlledInput';
+export * from './Feature';
