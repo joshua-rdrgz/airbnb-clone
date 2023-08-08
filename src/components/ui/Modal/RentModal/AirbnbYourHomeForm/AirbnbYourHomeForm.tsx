@@ -22,7 +22,9 @@ export const AirbnbYourHomeForm = () => {
         <CategoryStep />
       </Form.Step>
       <Form.Step step={2}>
-        <LocationStep />
+        <Form.Feature name='location'>
+          <LocationStep />
+        </Form.Feature>
       </Form.Step>
     </Form>
   );
