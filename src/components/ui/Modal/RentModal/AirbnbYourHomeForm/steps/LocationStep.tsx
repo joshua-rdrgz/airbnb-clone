@@ -1,12 +1,41 @@
 'use client';
 
+import dynamic from 'next/dynamic';
+import { useMemo } from 'react';
 import Select from 'react-select';
+import { useCountries } from '@hooks/useCountries';
 import { Heading } from '@ui/Heading';
 import { Form } from '@ui/Form';
-import { useCountries } from '@hooks/useCountries';
+import { Loader } from '@ui/Loader';
 
-export const LocationStep = () => {
+interface LocationStepProps {
+  /** Can receive from Form.Feature */
+  value?: {
+    flag: string;
+    label: string;
+    latlng: number[];
+    region: string;
+    value: string;
+  };
+}
+
+export const LocationStep: React.FC<LocationStepProps> = ({
+  value: location,
+}) => {
   const { getAll } = useCountries();
+
+  const Map = useMemo(
+    () =>
+      dynamic(
+        async () => {
+          const mod = await import('@ui/Map');
+          return mod.Map;
+        },
+        { loading: () => <Loader size={50} height='small' />, ssr: false }
+      ),
+    [location]
+  );
+
   return (
     <>
       <Heading>
@@ -45,6 +74,7 @@ export const LocationStep = () => {
           })}
         />
       </Form.ControlledInput>
+      <Map center={location?.latlng} />
     </>
   );
 };
