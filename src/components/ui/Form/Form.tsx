@@ -29,6 +29,7 @@ export const FormContext = createContext<FormContextProps | null>(null);
 
 interface FormProps<DefaultValues> {
   children: React.ReactNode;
+  /** MUST throw Error in catch block or form will reset! */
   onSubmit(data: FieldValues): Promise<void>;
   defaultValues: DefaultValues;
   watch?: string[];
@@ -82,9 +83,16 @@ export const Form = <DV extends object>({
   ) => {
     setIsLoading(true);
 
-    onFormSubmit(data).finally(() => {
-      setIsLoading(false);
-    });
+    onFormSubmit(data)
+      .then(() => {
+        methods.reset();
+      })
+      .catch((err) => {
+        console.error(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
