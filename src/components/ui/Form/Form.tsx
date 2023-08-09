@@ -49,11 +49,9 @@ export const Form = <DV extends object>({
 
   /** Multi-Step Form State */
   const [step, setStep] = useState(1);
-  console.log('step from Form: ', step);
 
   /** Set up watching if provided */
   const watching = watch && methods.watch(watch);
-  console.log('watching from Form: ', watching);
 
   /** Multi-Step Form Functionality */
   const onBack = () => {
