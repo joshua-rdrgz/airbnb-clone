@@ -10,7 +10,7 @@ export const PriceStep = () => {
       </Heading>
       <TextInput
         inputId='price'
-        inputProps={{
+        addInputProps={{
           formatPrice: true,
           type: 'number',
         }}

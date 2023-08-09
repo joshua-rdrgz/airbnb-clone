@@ -43,15 +43,19 @@ const labelStyles = cva(
 
 interface TextInputProps {
   inputId: string;
-  inputProps: {};
+  addInputProps?: {};
   label: string;
 }
 
 /** *Must be used inside Form Compound Component* */
-export const TextInput: React.FC<TextInputProps> = ({ inputId, inputProps, label }) => {
+export const TextInput: React.FC<TextInputProps> = ({
+  inputId,
+  addInputProps,
+  label,
+}) => {
   return (
     <div className='w-full relative'>
-      <Form.Input id={inputId} styles={inputStyles} {...inputProps} />
+      <Form.Input id={inputId} styles={inputStyles} {...addInputProps} />
       <Form.Label styles={labelStyles} htmlFor={inputId}>
         {label}
       </Form.Label>
