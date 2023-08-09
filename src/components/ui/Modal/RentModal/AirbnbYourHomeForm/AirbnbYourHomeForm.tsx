@@ -8,6 +8,7 @@ import {
   InfoStep,
   ImageStep,
   DescriptionStep,
+  PriceStep,
 } from './steps';
 
 export const AirbnbYourHomeForm = () => {
@@ -26,6 +27,7 @@ export const AirbnbYourHomeForm = () => {
         imageSrc: '',
         title: '',
         description: '',
+        price: 1,
       }}
       watch={[
         'category',
@@ -36,6 +38,7 @@ export const AirbnbYourHomeForm = () => {
         'imageSrc',
         'title',
         'description',
+        'price',
       ]}
       numberOfSteps={6}
     >
@@ -55,6 +58,9 @@ export const AirbnbYourHomeForm = () => {
       </Form.Step>
       <Form.Step step={5}>
         <DescriptionStep />
+      </Form.Step>
+      <Form.Step step={6}>
+        <PriceStep />
       </Form.Step>
     </Form>
   );
