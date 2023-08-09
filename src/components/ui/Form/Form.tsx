@@ -59,7 +59,9 @@ export const Form = <DV extends object>({
     setStep((step) => step - 1);
   };
 
-  const onNext = () => {
+  const onNext = async () => {
+    const allowedToProceed = await methods.trigger();
+    if (!allowedToProceed) return;
     setStep((step) => step + 1);
   };
 
