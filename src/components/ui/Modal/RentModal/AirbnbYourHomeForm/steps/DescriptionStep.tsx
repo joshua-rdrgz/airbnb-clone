@@ -8,9 +8,17 @@ export const DescriptionStep = () => {
         <Heading.Title>How would you describe your place?</Heading.Title>
         <Heading.Subtitle>Short and sweet works best!</Heading.Subtitle>
       </Heading>
-      <TextInput inputId='title' label='Title' />
+      <TextInput
+        inputId='title'
+        addInputProps={{ required: true }}
+        label='Title'
+      />
       <hr />
-      <TextInput inputId='description' label='Description' />
+      <TextInput
+        inputId='description'
+        addInputProps={{ required: true }}
+        label='Description'
+      />
     </div>
   );
 };
