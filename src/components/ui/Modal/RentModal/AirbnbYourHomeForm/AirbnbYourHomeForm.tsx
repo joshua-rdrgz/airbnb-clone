@@ -14,13 +14,18 @@ import {
 } from './steps';
 import { Form } from '@ui/Form';
 
-export const AirbnbYourHomeForm = () => {
+interface AirbnbYourHomeFormProps {
+  closeModal?(): Promise<void>;
+}
+
+export const AirbnbYourHomeForm = ({ closeModal }: AirbnbYourHomeFormProps) => {
   const router = useRouter();
 
   const onFormSubmit = async (data: FieldValues) => {
     try {
       await axios.post('/api/listings', data);
       toast.success('Listing created!');
+      closeModal?.();
       router.refresh();
     } catch (error: any) {
       toast.error('Something went wrong.');
