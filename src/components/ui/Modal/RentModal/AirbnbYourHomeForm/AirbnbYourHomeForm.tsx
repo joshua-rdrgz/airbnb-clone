@@ -2,7 +2,7 @@
 
 import { Form } from '@ui/Form';
 import { FieldValues } from 'react-hook-form';
-import { CategoryStep, LocationStep } from './steps';
+import { CategoryStep, LocationStep, InfoStep } from './steps';
 
 export const AirbnbYourHomeForm = () => {
   const onFormSubmit = async (data: FieldValues) => {
@@ -14,8 +14,17 @@ export const AirbnbYourHomeForm = () => {
       defaultValues={{
         category: '',
         location: '',
+        guestCount: 1,
+        roomCount: 1,
+        bathroomCount: 1,
       }}
-      watch={['category', 'location']}
+      watch={[
+        'category',
+        'location',
+        'guestCount',
+        'roomCount',
+        'bathroomCount',
+      ]}
       numberOfSteps={6}
     >
       <Form.Step step={1}>
@@ -25,6 +34,9 @@ export const AirbnbYourHomeForm = () => {
         <Form.Feature name='location'>
           <LocationStep />
         </Form.Feature>
+      </Form.Step>
+      <Form.Step step={3}>
+        <InfoStep />
       </Form.Step>
     </Form>
   );
