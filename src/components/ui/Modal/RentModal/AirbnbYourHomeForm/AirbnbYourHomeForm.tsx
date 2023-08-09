@@ -1,7 +1,9 @@
 'use client';
 
-import { Form } from '@ui/Form';
+import axios from 'axios';
 import { FieldValues } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 import {
   CategoryStep,
   LocationStep,
@@ -10,11 +12,22 @@ import {
   DescriptionStep,
   PriceStep,
 } from './steps';
+import { Form } from '@ui/Form';
 
 export const AirbnbYourHomeForm = () => {
+  const router = useRouter();
+
   const onFormSubmit = async (data: FieldValues) => {
-    console.log('form submitted, here is the data: ', data);
+    try {
+      await axios.post('/api/listings', data);
+      toast.success('Listing created!');
+      router.refresh();
+    } catch (error: any) {
+      toast.error('Something went wrong.');
+      throw new Error(error.message);
+    }
   };
+
   return (
     <Form
       onSubmit={onFormSubmit}
