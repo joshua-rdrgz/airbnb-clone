@@ -2,11 +2,13 @@ import { MenuItem } from '@ui/Navbar/MenuItem';
 import { Modal } from '@ui/Modal';
 import { RentModal } from '@ui/Modal/RentModal';
 import { Logout } from './Logout';
+import { useRouter } from 'next/navigation';
 
 export const LoggedInNav = () => {
+  const router = useRouter();
   return (
     <>
-      <MenuItem onClick={() => {}}>My trips</MenuItem>
+      <MenuItem onClick={() => router.push('/trips')}>My trips</MenuItem>
       <MenuItem onClick={() => {}}>My favorites</MenuItem>
       <MenuItem onClick={() => {}}>My reservations</MenuItem>
       <MenuItem onClick={() => {}}>My properties</MenuItem>
