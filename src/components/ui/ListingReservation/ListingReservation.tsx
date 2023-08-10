@@ -1,8 +1,11 @@
 'use client';
 
 import { Range } from 'react-date-range';
+import { SafeUser } from '@/types';
 import { Calendar } from '@ui/Calendar';
-import { Button } from '../Button';
+import { Button } from '@ui/Button';
+import { Modal } from '@ui/Modal';
+import { NotLoggedInModalWindow } from '../Modal/GuestModal/NotLoggedInModalWindow';
 
 interface ListingReservationProps {
   price: number;
@@ -12,6 +15,7 @@ interface ListingReservationProps {
   onSubmit(): void;
   disabled: boolean;
   disabledDates: Date[];
+  currentUser?: SafeUser | null;
 }
 
 export const ListingReservation: React.FC<ListingReservationProps> = ({
@@ -22,6 +26,7 @@ export const ListingReservation: React.FC<ListingReservationProps> = ({
   onSubmit,
   disabled,
   disabledDates,
+  currentUser,
 }) => {
   return (
     <div className='bg-white rounded-xl border-[1px] border-neutral-200 overflow-hidden'>
@@ -37,7 +42,12 @@ export const ListingReservation: React.FC<ListingReservationProps> = ({
       />
       <hr />
       <div className='p-4'>
-        <Button disabled={disabled} label='Reserve' onClick={onSubmit} />
+        <Modal condition={!currentUser}>
+          <Modal.Open opens='login_modal' conditionNotMetOnClick={onSubmit}>
+            <Button disabled={disabled} label='Reserve' />
+          </Modal.Open>
+          <NotLoggedInModalWindow />
+        </Modal>
       </div>
       <div className='p-4 flex flex-row items-center justify-between font-semibold text-lg'>
         <div>Total</div>
