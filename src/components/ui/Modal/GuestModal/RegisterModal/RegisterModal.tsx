@@ -22,7 +22,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
     try {
       axios.post('/api/register', data);
       toast.success('Registered!');
-      closeModal?.();
+      toggleModal?.('login_modal');
     } catch (err) {
       toast.error('Something went wrong.... 🤔');
     }
