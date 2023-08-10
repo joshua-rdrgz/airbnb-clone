@@ -5,9 +5,8 @@ import { toast } from 'react-hot-toast';
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { SafeReservation, SafeUser } from '@/types';
-import { Heading } from '@ui/Heading';
-import { Container } from '@ui/Container';
 import { ListingCard } from '@ui/ListingCard';
+import { CardGrid } from '@/components/ui/CardGrid';
 
 interface ReservationsClientProps {
   reservations: SafeReservation[];
@@ -38,25 +37,22 @@ export const ReservationsClient: React.FC<ReservationsClientProps> = ({
   );
 
   return (
-    <Container>
-      <Heading>
-        <Heading.Title>Reservations</Heading.Title>
-        <Heading.Subtitle>Bookings on your properties</Heading.Subtitle>
-      </Heading>
-      <div className='mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8'>
-        {reservations.map((reservation) => (
-          <ListingCard
-            key={reservation.id}
-            data={reservation.listing}
-            reservation={reservation}
-            actionId={reservation.id}
-            onAction={onCancel}
-            disabled={deletingId === reservation.id}
-            actionLabel='Cancel guest reservation'
-            currentUser={currentUser}
-          />
-        ))}
-      </div>
-    </Container>
+    <CardGrid
+      title='Reservations'
+      subtitle='Bookings on your properties'
+      data={reservations}
+      render={(reservation) => (
+        <ListingCard
+          key={reservation.id}
+          data={reservation.listing}
+          reservation={reservation}
+          actionId={reservation.id}
+          onAction={onCancel}
+          disabled={deletingId === reservation.id}
+          actionLabel='Cancel guest reservation'
+          currentUser={currentUser}
+        />
+      )}
+    />
   );
 };
