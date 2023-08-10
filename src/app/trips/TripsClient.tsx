@@ -5,9 +5,8 @@ import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { SafeReservation, SafeUser } from '@/types';
-import { Container } from '@ui/Container';
-import { Heading } from '@ui/Heading';
 import { ListingCard } from '@ui/ListingCard';
+import { CardGrid } from '@/components/ui/CardGrid';
 
 interface TripsClientProps {
   reservations: SafeReservation[];
@@ -38,27 +37,22 @@ export const TripsClient: React.FC<TripsClientProps> = ({
   );
 
   return (
-    <Container>
-      <Heading>
-        <Heading.Title>Trips</Heading.Title>
-        <Heading.Subtitle>
-          Where you&apos;ve been and where you&apos;re going
-        </Heading.Subtitle>
-      </Heading>
-      <div className='mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8'>
-        {reservations.map((reservation) => (
-          <ListingCard
-            key={reservation.id}
-            data={reservation.listing}
-            reservation={reservation}
-            actionId={reservation.id}
-            onAction={onCancel}
-            disabled={deletingId === reservation.id}
-            actionLabel='Cancel reservation'
-            currentUser={currentUser}
-          />
-        ))}
-      </div>
-    </Container>
+    <CardGrid
+      title='Trips'
+      subtitle="Where you've been and where you're going"
+      data={reservations}
+      render={(reservation) => (
+        <ListingCard
+          key={reservation.id}
+          data={reservation.listing}
+          reservation={reservation}
+          actionId={reservation.id}
+          onAction={onCancel}
+          disabled={deletingId === reservation.id}
+          actionLabel='Cancel reservation'
+          currentUser={currentUser}
+        />
+      )}
+    />
   );
 };
