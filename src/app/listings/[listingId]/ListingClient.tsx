@@ -53,8 +53,6 @@ export const ListingClient: React.FC<ListingClientProps> = ({
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
   const onCreateReservation = useCallback(() => {
-    // TODO: if no current user, open login modal
-
     setIsLoading(true);
 
     axios
@@ -67,7 +65,7 @@ export const ListingClient: React.FC<ListingClientProps> = ({
       .then(() => {
         toast.success('Reservation booked!');
         setDateRange(initialDateRange);
-        // redirect to /trips
+        router.push('/trips');
         router.refresh();
       })
       .catch(() => {
@@ -127,6 +125,7 @@ export const ListingClient: React.FC<ListingClientProps> = ({
                 onSubmit={onCreateReservation}
                 disabled={isLoading}
                 disabledDates={disabledDates}
+                currentUser={currentUser}
               />
             </div>
           </div>
