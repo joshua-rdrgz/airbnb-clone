@@ -4,8 +4,7 @@ import useFavorite from '@hooks/useFavorite';
 import { SafeUser } from '@/types';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { Modal } from '@ui/Modal';
-import { LoginModal } from '../Modal/GuestModal/LoginModal';
-import { RegisterModal } from '../Modal/GuestModal/RegisterModal';
+import { NotLoggedInModalWindow } from '../Modal/GuestModal/NotLoggedInModalWindow';
 
 interface HeartButtonProps {
   listingId: string;
@@ -35,16 +34,7 @@ export const HeartButton: React.FC<HeartButtonProps> = ({
           />
         </div>
       </Modal.Open>
-
-      <Modal.Window name='login_modal'>
-        <Modal.Heading>Log in</Modal.Heading>
-        <LoginModal />
-      </Modal.Window>
-
-      <Modal.Window name='sign_up_modal'>
-        <Modal.Heading>Sign up</Modal.Heading>
-        <RegisterModal />
-      </Modal.Window>
+      <NotLoggedInModalWindow />
     </Modal>
   );
 };
