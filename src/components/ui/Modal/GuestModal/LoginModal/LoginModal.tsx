@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { signIn, SignInResponse } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
 import { FieldValues } from 'react-hook-form';
-import { cva } from 'class-variance-authority';
 import { Heading } from '@ui/Heading';
 import { Form } from '@ui/Form';
 import { SocialSignUpOrIn } from '../SocialSignUpOrIn';
