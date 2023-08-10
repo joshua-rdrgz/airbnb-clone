@@ -10,7 +10,9 @@ export const LoggedInNav = () => {
     <>
       <MenuItem onClick={() => router.push('/trips')}>My trips</MenuItem>
       <MenuItem onClick={() => {}}>My favorites</MenuItem>
-      <MenuItem onClick={() => {}}>My reservations</MenuItem>
+      <MenuItem onClick={() => router.push('/reservations')}>
+        My reservations
+      </MenuItem>
       <MenuItem onClick={() => {}}>My properties</MenuItem>
       <Modal>
         <Modal.Open opens='rent_modal'>
