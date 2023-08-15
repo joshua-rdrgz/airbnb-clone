@@ -65,7 +65,10 @@ export const AirbnbYourHomeForm = ({ closeModal }: AirbnbYourHomeFormProps) => {
       </Form.Step>
       <Form.Step step={2}>
         <Form.Feature name='location'>
-          <LocationStep />
+          <LocationStep
+            title='Where is your place located?'
+            subtitle='Help guests find you!'
+          />
         </Form.Feature>
       </Form.Step>
       <Form.Step step={3}>

@@ -17,10 +17,14 @@ interface LocationStepProps {
     region: string;
     value: string;
   };
+  title: string;
+  subtitle: string;
 }
 
 export const LocationStep: React.FC<LocationStepProps> = ({
   value: location,
+  title,
+  subtitle,
 }) => {
   const { getAll } = useCountries();
 
@@ -39,8 +43,8 @@ export const LocationStep: React.FC<LocationStepProps> = ({
   return (
     <>
       <Heading>
-        <Heading.Title>Where is your place located?</Heading.Title>
-        <Heading.Subtitle>Help guests find you!</Heading.Subtitle>
+        <Heading.Title>{title}</Heading.Title>
+        <Heading.Subtitle>{subtitle}</Heading.Subtitle>
       </Heading>
       <Form.ControlledInput name='location'>
         <Select
