@@ -109,6 +109,11 @@ const Button: React.FC<ButtonProps> = ({ type }) => {
 
   return (
     <button
+      /**
+       * type='button' to stop default of type='submit' 
+       * which might accidentally submit a form.
+       */
+      type='button'
       onClick={type === 'add' ? onAdd : onReduce}
       className='w-10 h-10 rounded-full border-[1px] border-neutral-400 flex items-center justify-center text-neutral-600 cursor-pointer hover:opacity-80 transition'
     >
