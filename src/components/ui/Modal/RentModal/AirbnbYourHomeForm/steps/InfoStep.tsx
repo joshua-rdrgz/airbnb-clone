@@ -10,7 +10,7 @@ interface InfoProps {
   subtitle: string;
 }
 
-const Info: React.FC<InfoProps> = ({
+export const Info: React.FC<InfoProps> = ({
   controlledInputName,
   title,
   subtitle,
