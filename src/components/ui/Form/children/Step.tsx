@@ -27,7 +27,7 @@ const StepFooter = () => {
           {multiStepForm.backButtonContent}
         </Form.Action>
       )}
-      {multiStepForm.nextButtonContent === 'Create' ? (
+      {multiStepForm.nextButtonContent === multiStepForm.lastStepBtnContent ? (
         <Form.Submit>{multiStepForm.nextButtonContent}</Form.Submit>
       ) : (
         <Form.Action onClick={multiStepForm.onNext}>

@@ -21,7 +21,9 @@ export interface FormContextProps {
     onBack(): void;
     onNext(): void;
     backButtonContent: 'Back' | undefined;
-    nextButtonContent: 'Create' | 'Next';
+    nextButtonContent: string;
+    isLastStep: boolean;
+    lastStepBtnContent: string;
   };
 }
 
@@ -34,6 +36,7 @@ interface FormProps<DefaultValues> {
   defaultValues: DefaultValues;
   watch?: string[];
   numberOfSteps?: number;
+  lastStepBtnContent?: string;
 }
 
 export const Form = <DV extends object>({
@@ -42,6 +45,7 @@ export const Form = <DV extends object>({
   defaultValues,
   watch,
   numberOfSteps,
+  lastStepBtnContent = 'Create',
 }: FormProps<DV>) => {
   /** General Form State */
   const [isLoading, setIsLoading] = useState(false);
@@ -70,9 +74,9 @@ export const Form = <DV extends object>({
   }, [step]);
 
   const nextButtonContent = useMemo(() => {
-    if (step === numberOfSteps) return 'Create';
+    if (step === numberOfSteps) return lastStepBtnContent;
     return 'Next';
-  }, [step, numberOfSteps]);
+  }, [step, numberOfSteps, lastStepBtnContent]);
 
   /** Form Submit Functions */
   const onSubmitWrapper = (
@@ -104,6 +108,8 @@ export const Form = <DV extends object>({
           onNext,
           backButtonContent,
           nextButtonContent,
+          isLastStep: step === numberOfSteps,
+          lastStepBtnContent,
         },
       }}
     >
