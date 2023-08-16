@@ -62,6 +62,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               addInputProps={{ required: true }}
               label='Email'
             />
+            <p>DEMO USER: demouser@email.com</p>
             <TextInput
               inputId='password'
               addInputProps={{
@@ -70,6 +71,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               }}
               label='Password'
             />
+            <p>DEMO PASSWORD: pass1234</p>
             <Form.Footer>
               <Form.Submit>Login</Form.Submit>
             </Form.Footer>

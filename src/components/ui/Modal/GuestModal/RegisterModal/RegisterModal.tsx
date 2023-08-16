@@ -35,6 +35,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
           <Heading>
             <Heading.Title>Welcome to Airbnb</Heading.Title>
             <Heading.Subtitle>Create an account!</Heading.Subtitle>
+            <Heading.Subtitle>FOR DEMO, LOG IN INSTEAD!</Heading.Subtitle>
           </Heading>
           <Form
             onSubmit={onFormSubmit}
