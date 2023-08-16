@@ -8,11 +8,11 @@ import { differenceInCalendarDays, eachDayOfInterval } from 'date-fns';
 import { Range } from 'react-date-range';
 import { SafeListing, SafeReservation, SafeUser } from '@/types';
 
-import { categoriesList } from '@ui/Navbar/Categories';
-import { Container } from '@ui/Container';
-import { ListingHead } from '@ui/ListingHead';
-import { ListingInfo } from '@ui/ListingInfo.tsx';
-import { ListingReservation } from '@ui/ListingReservation';
+import { categoriesList } from '@/app/components/ui/Navbar/Categories';
+import { Container } from '@/app/components/ui/Container';
+import { ListingHead } from '@/app/components/ui/ListingHead';
+import { ListingInfo } from '@/app/components/ui/ListingInfo.tsx';
+import { ListingReservation } from '@/app/components/ui/ListingReservation';
 
 const initialDateRange = {
   startDate: new Date(),

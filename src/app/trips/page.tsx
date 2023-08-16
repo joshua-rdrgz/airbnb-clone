@@ -1,4 +1,4 @@
-import { EmptyState } from '@/components/ui/EmptyState';
+import { EmptyState } from '@/app/components/ui/EmptyState';
 import { getCurrentUser } from '@/actions/getCurrentUser';
 import getReservations from '@/actions/getReservations';
 import { TripsClient } from './TripsClient';

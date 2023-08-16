@@ -1,8 +1,8 @@
 import { getCurrentUser } from '@/actions/getCurrentUser';
 import getListings, { IListingsParams } from '@/actions/getListings';
-import { Container } from '@ui/Container';
-import { EmptyState } from '@ui/EmptyState';
-import { ListingCard } from '@ui/ListingCard';
+import { Container } from '@/app/components/ui/Container';
+import { EmptyState } from '@/app/components/ui/EmptyState';
+import { ListingCard } from '@/app/components/ui/ListingCard';
 
 interface HomeProps {
   searchParams: IListingsParams;

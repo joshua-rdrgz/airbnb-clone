@@ -1,7 +1,7 @@
 'use client';
 
-import { CardGrid } from '@/components/ui/CardGrid';
-import { ListingCard } from '@/components/ui/ListingCard';
+import { CardGrid } from '@/app/components/ui/CardGrid';
+import { ListingCard } from '@/app/components/ui/ListingCard';
 import { SafeListing, SafeUser } from '@/types';
 
 interface FavoritesClientProps {

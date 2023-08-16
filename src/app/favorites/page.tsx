@@ -1,6 +1,6 @@
 import { getCurrentUser } from '@/actions/getCurrentUser';
 import getFavoriteListings from '@/actions/getFavoriteListings';
-import { EmptyState } from '@/components/ui/EmptyState';
+import { EmptyState } from '@/app/components/ui/EmptyState';
 import { FavoritesClient } from './FavoritesClient';
 
 export default async function FavoritesPage() {

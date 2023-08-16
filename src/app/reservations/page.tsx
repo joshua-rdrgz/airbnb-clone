@@ -1,6 +1,6 @@
 import { getCurrentUser } from '@/actions/getCurrentUser';
 import getReservations from '@/actions/getReservations';
-import { EmptyState } from '@ui/EmptyState';
+import { EmptyState } from '@/app/components/ui/EmptyState';
 import { ReservationsClient } from './ReservationsClient';
 
 export default async function ReservationPage() {

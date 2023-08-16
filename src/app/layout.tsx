@@ -1,6 +1,6 @@
 import './globals.css';
 import { Nunito } from 'next/font/google';
-import { Navbar } from '@ui/Navbar';
+import { Navbar } from '@/app/components/ui/Navbar';
 import { getCurrentUser } from '../actions/getCurrentUser';
 import { ToasterProvider } from '@providers/ToasterProvider';
 

@@ -5,8 +5,8 @@ import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { SafeListing, SafeUser } from '@/types';
-import { ListingCard } from '@ui/ListingCard';
-import { CardGrid } from '@/components/ui/CardGrid';
+import { ListingCard } from '@/app/components/ui/ListingCard';
+import { CardGrid } from '@/app/components/ui/CardGrid';
 
 interface PropertiesClientProps {
   listings: SafeListing[];
